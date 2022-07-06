@@ -1,0 +1,113 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+apply from: "${project.rootDir}/config/gradle/moduleTasks.gradle"
+
+if (file("local.gradle").exists()) {
+    apply from: "local.gradle"
+} else {
+    logger.lifecycle("File app/local.gradle not found. Duplicate app/local.gradle.example and fill in your API key.")
+}
+
+android {
+    compileSdkVersion sdk.compile
+    defaultConfig {
+        applicationId "com.example.baseapp"
+        minSdkVersion sdk.min
+        targetSdkVersion sdk.target
+        versionCode proj.version_code
+        versionName proj.version_name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+        compose true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose
+        kotlinCompilerVersion versions.kotlin
+    }
+    lint {
+        abortOnError true
+        htmlOutput file("$project.buildDir/reports/lint/lint-results.html")
+        htmlReport true
+        ignoreWarnings false
+        lintConfig file("$rootDir/config/lint/lint-rules.xml")
+        xmlReport false
+    }
+    namespace 'com.example.baseapp'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.core_ktx}"
+    // DI
+    implementation "com.google.dagger:hilt-android:${versions.dagger_hilt}"
+    kapt "com.google.dagger:hilt-android-compiler:${versions.dagger_hilt}"
+    kapt "androidx.hilt:hilt-compiler:${versions.hilt_compiler}"
+    implementation "androidx.hilt:hilt-navigation-compose:${versions.hilt_navigation_compose}"
+    // Legacy
+    implementation "androidx.legacy:legacy-support-v4:${versions.legacy}"
+    // UI
+    implementation "androidx.appcompat:appcompat:${versions.appcompat}"
+    // Compose
+    implementation "androidx.compose.material:material:${versions.compose}"
+    implementation "androidx.constraintlayout:constraintlayout-compose:${versions.constraintlayout_compose}"
+    implementation "androidx.compose.ui:ui-tooling:${versions.compose}"
+    implementation "androidx.compose.ui:ui-tooling-preview:${versions.compose}"
+    // Activity
+    implementation "androidx.activity:activity-compose:${versions.activity}"
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.lifecycle_viewmodel_compose}"
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+    implementation "androidx.navigation:navigation-compose:${versions.navigation}"
+    // Room
+    implementation "androidx.room:room-runtime:${versions.room}"
+    kapt "androidx.room:room-compiler:${versions.room}"
+    implementation "androidx.room:room-ktx:${versions.room}"
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:${versions.datastore_preferences}"
+    // Google play services
+    implementation "com.google.android.gms:play-services-location:${versions.play_services_location}"
+    // Firebase
+    implementation "com.google.firebase:firebase-analytics-ktx:${versions.firebase_analytics}"
+    implementation "com.google.firebase:firebase-crashlytics-ktx:${versions.firebase_crashlytics}"
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${versions.logging_interceptor}"
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-navigation-material:${versions.accompanist_navigation_material}"
+    implementation "com.google.accompanist:accompanist-pager:${versions.accompanist_pager}"
+    implementation "com.google.accompanist:accompanist-permissions:${versions.accompanist_permissions}"
+    implementation "com.google.accompanist:accompanist-webview:${versions.accompanist_webview}"
+    // Coil
+    implementation "io.coil-kt:coil-compose:${versions.coil}"
+    // Test
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "androidx.test.ext:junit-ktx:${versions.ext_junit}"
+    androidTestImplementation "androidx.test:runner:${versions.runner}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso_core}"
+}

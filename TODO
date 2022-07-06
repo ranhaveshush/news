@@ -1,0 +1,3 @@
+TODO:
+- Add detekt configuration file.
+- Add kotlin static code analysis (e.g. ktlint)

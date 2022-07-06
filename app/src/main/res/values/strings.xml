@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">News</string>
+
+    <!-- Headlines -->
+    <string name="content_description_headline_thumbnail">Headline thumbnail</string>
+
+</resources>
