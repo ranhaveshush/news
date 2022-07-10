@@ -14,8 +14,8 @@ import javax.inject.Singleton
 @Qualifier
 annotation class ApplicationScope
 
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 object CoroutineScopeModule {
     @Singleton
     @ApplicationScope

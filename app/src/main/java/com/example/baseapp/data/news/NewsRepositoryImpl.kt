@@ -1,8 +1,9 @@
 package com.example.baseapp.data.news
 
-import com.example.baseapp.model.Article
 import com.example.baseapp.api.news.NewsService
 import com.example.baseapp.data.Result
+import com.example.baseapp.model.Article
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
@@ -21,7 +22,7 @@ class NewsRepositoryImpl @Inject constructor(
             page = page
         )
 
-        return if (response.status == "ok") {
+        return if (response.isSuccessful()) {
             Result.Success(response.articles)
         } else {
             Result.Error(IllegalArgumentException("Unable to find headlines"))

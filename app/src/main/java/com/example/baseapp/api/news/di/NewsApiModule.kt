@@ -6,13 +6,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class NewsApiModule {
+    @Singleton
     @Provides
-    fun providesApi(): NewsApi = NewsApi
+    fun providesApi(): NewsApi = NewsApi()
 
     @Provides
-    fun providesService(api: NewsApi): NewsService = NewsApi.service
+    fun providesService(api: NewsApi): NewsService = api.service
 }

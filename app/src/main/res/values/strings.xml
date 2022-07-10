@@ -2,6 +2,11 @@
     <string name="app_name">News</string>
 
     <!-- Headlines -->
+    <string name="headlines_title">Headlines</string>
     <string name="content_description_headline_thumbnail">Headline thumbnail</string>
+
+    <!-- Pokemons -->
+    <string name="pokemons_title">Pokemons</string>
+    <string name="content_description_pokemon_item_image">Pokemon Image</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.baseapp.ui
+package com.example.baseapp.ui.common
 
 interface UiStateTransformer<Data, UiState> {
     fun transform(data: Data): UiState

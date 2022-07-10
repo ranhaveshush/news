@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.2.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${versions.detekt}"
         classpath "com.google.dagger:hilt-android-gradle-plugin:${versions.dagger_hilt}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"

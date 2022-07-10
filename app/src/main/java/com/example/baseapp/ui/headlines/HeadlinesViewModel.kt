@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,15 +29,25 @@ class HeadlinesViewModel @Inject constructor(
 
     private fun load() {
         viewModelScope.launch {
-            _uiState.value = HeadlinesUiState(isLoading = true)
+            _uiState.update { it.copy(isLoading = true) }
 
-            _uiState.value = when (val result = repository.fetchTopHeadlines(country = "us")) {
-                is Result.Success -> HeadlinesUiState(
-                    headlines = transformer.transform(result.data)
-                )
-                else -> HeadlinesUiState(
-                    errorMessages = listOf(ErrorMessage("Unable to fetch headlines"))
-                )
+            when (val result = repository.fetchTopHeadlines(country = "us")) {
+                is Result.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            headlines = transformer.transform(result.data)
+                        )
+                    }
+                }
+                else -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessages = listOf(ErrorMessage("Unable to fetch headlines"))
+                        )
+                    }
+                }
             }
         }
     }

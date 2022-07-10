@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
 apply plugin: 'dagger.hilt.android.plugin'
 
 apply from: "${project.rootDir}/config/gradle/moduleTasks.gradle"
@@ -96,8 +97,11 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics-ktx:${versions.firebase_crashlytics}"
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
-    implementation "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${versions.kotlin_serialization_converter}"
+//    implementation "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
     implementation "com.squareup.okhttp3:logging-interceptor:${versions.logging_interceptor}"
+    // Kotlin Serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:${versions.kotlin_serialization}"
     // Accompanist
     implementation "com.google.accompanist:accompanist-navigation-material:${versions.accompanist_navigation_material}"
     implementation "com.google.accompanist:accompanist-pager:${versions.accompanist_pager}"
