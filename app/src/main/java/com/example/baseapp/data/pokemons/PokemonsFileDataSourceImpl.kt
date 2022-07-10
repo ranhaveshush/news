@@ -1,11 +1,12 @@
 package com.example.baseapp.data.pokemons
 
 import android.content.res.AssetManager
-import com.example.baseapp.data.serializer.JsonSerializer
+import com.example.baseapp.data.json.serializer.JsonSerializer
 import com.example.baseapp.di.IoDispatcher
 import com.example.baseapp.model.Pokemon
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 private const val POKEMONS_FILE_NAME = "pokemons.json"

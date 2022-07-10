@@ -1,4 +1,4 @@
-package com.example.baseapp.data.serializer
+package com.example.baseapp.data.json.serializer
 
 import java.io.InputStream
 

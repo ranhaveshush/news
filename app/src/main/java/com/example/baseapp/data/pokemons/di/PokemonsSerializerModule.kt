@@ -1,6 +1,6 @@
 package com.example.baseapp.data.pokemons.di
 
-import com.example.baseapp.data.serializer.JsonSerializer
+import com.example.baseapp.data.json.serializer.JsonSerializer
 import com.example.baseapp.model.Pokemon
 import dagger.Module
 import dagger.Provides
@@ -14,11 +14,11 @@ import java.io.InputStream
 @InstallIn(ViewModelComponent::class)
 class PokemonsSerializerModule {
     @Provides
-    fun provideSerializer(): JsonSerializer<List<Pokemon>> =
+    fun provideSerializer(json: Json): JsonSerializer<List<Pokemon>> =
         object : JsonSerializer<List<Pokemon>> {
             @Suppress("UNCHECKED_CAST")
             override fun <T> decodeFromStream(stream: InputStream): T {
-                return Json.decodeFromStream<List<Pokemon>>(stream) as T
+                return json.decodeFromStream<List<Pokemon>>(stream) as T
             }
         }
 }

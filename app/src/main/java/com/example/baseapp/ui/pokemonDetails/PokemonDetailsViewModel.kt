@@ -2,6 +2,7 @@ package com.example.baseapp.ui.pokemonDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.baseapp.data.Result
 import com.example.baseapp.data.pokemons.PokemonsRepository
 import com.example.baseapp.ui.pokemonDetails.transformer.PokemonDetailsUiStateTransformer
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,10 @@ class PokemonDetailsViewModel @Inject constructor(
     private val transformer: PokemonDetailsUiStateTransformer,
 ) : ViewModel() {
     fun pokemonDetails(pokemonId: Int): StateFlow<PokemonDetailsUiState> = flow {
-        val pokemonDetails = repository.getPokemon(pokemonId)
+        val result = repository.getPokemon(pokemonId)
+        // TODO: handle error result.
+        if (result !is Result.Success) return@flow
+        val pokemonDetails = result.data
         val uiState = transformer.transform(pokemonDetails)
         emit(uiState)
     }.stateIn(
